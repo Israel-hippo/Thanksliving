@@ -1,2 +1,3 @@
 # Thanksliving
 « thanksliving » veut dire vivre la gratitude au quotidien, dans l'esprit de Thanksgiving. 
+Le site contient un titre d'accroche, un champ « Aujourd'hui, je remercie… » qui ajoute des notes colorées sur un « mur des mercis » (sauvegardées dans ton navigateur), et trois idées de pratiques (soir, semaine, repas). Les couleurs sont pin, courge et canneberge, avec un mode sombre automatique.
