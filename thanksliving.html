@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Thanksliving — vivre en disant merci</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#EEF0E6;--ink:#16342C;--muted:#4F6259;--card:#FFFFFF;--pine:#16342C;--squash:#E8A317;--berry:#A62B45;--sage:#C9D6BE;
+--serif:"Young Serif",Georgia,"Times New Roman",serif;--sans:"DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0F231E;--ink:#EEF0E6;--muted:#A9B9AE;--card:#173B32;--pine:#EEF0E6;--sage:#24493F}}
+:root[data-theme="dark"]{--bg:#0F231E;--ink:#EEF0E6;--muted:#A9B9AE;--card:#173B32;--pine:#EEF0E6;--sage:#24493F}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*:before,*:after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1.0625rem/1.6 var(--sans)}
+h1,h2,h3{font-family:var(--serif);font-weight:400;line-height:1.1;margin:0}
+main{max-width:64rem;margin:0 auto;padding:0 1.25rem}
+:focus-visible{outline:3px solid var(--squash);outline-offset:3px}
+.hero{padding:4rem 0 3rem}
+.hero h1{font-size:clamp(2.75rem,9vw,6rem);max-width:12ch;letter-spacing:-.02em}
+.hero p{max-width:34rem;color:var(--muted);margin:1.25rem 0 2rem}
+.say{display:flex;flex-wrap:wrap;gap:.75rem;align-items:stretch;max-width:40rem}
+.say label{flex:1 1 100%;font-family:var(--serif);font-size:1.35rem}
+.say input{flex:1 1 16rem;font:inherit;padding:.9rem 1.1rem;border:2px solid var(--ink);border-radius:.6rem;background:var(--card);color:var(--ink)}
+.say button{font:700 1rem var(--sans);padding:.9rem 1.5rem;border:0;border-radius:.6rem;background:var(--squash);color:#16342C;cursor:pointer}
+.say button:hover{background:#F2B63A}
+.wall-head{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;flex-wrap:wrap;margin:1rem 0 1.25rem}
+.wall-head h2{font-size:clamp(1.75rem,4vw,2.5rem)}
+.count{color:var(--muted)}
+.wall{columns:16rem;column-gap:1rem;padding-bottom:3rem}
+.note{break-inside:avoid;margin:0 0 1rem;padding:1.1rem 1.25rem;border-radius:.4rem .4rem .4rem 1.5rem;background:var(--sage);font-family:var(--serif);font-size:1.2rem;line-height:1.3}
+.note:nth-child(3n+1){background:var(--squash);color:#16342C;transform:rotate(-1deg)}
+.note:nth-child(3n+2){background:var(--berry);color:#fff;transform:rotate(.8deg)}
+.note:nth-child(3n){color:var(--ink)}
+.note.new{animation:pop .35s ease-out}
+@keyframes pop{from{transform:scale(.9);opacity:0}}
+.ways{display:grid;gap:2.5rem;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));padding:3rem 0;border-top:2px solid var(--ink)}
+.ways h2{grid-column:1/-1;font-size:clamp(1.75rem,4vw,2.5rem)}
+.ways h3{font-size:1.5rem;margin-bottom:.5rem}
+.ways p{margin:0;color:var(--muted);max-width:32ch}
+footer{padding:2rem 0 3rem;color:var(--muted);border-top:2px solid var(--ink)}
+.note p{margin:0}
+.actions{display:flex;gap:.5rem;margin-top:.75rem}
+.note button{font:500 .85rem var(--sans);padding:.3rem .7rem;border:1.5px solid currentColor;border-radius:.4rem;background:transparent;color:inherit;cursor:pointer}
+.note button:hover{background:rgba(0,0,0,.12)}
+.edit{display:flex;flex-direction:column;gap:.5rem}
+.edit input{font:inherit;font-size:1rem;padding:.6rem .8rem;border:2px solid var(--ink);border-radius:.4rem;background:var(--card);color:var(--ink)}
+.edit .actions{margin-top:0}
+@media (prefers-reduced-motion:reduce){.note.new{animation:none}}
+</style>
+</head>
+<body>
+<main>
+<header class="hero">
+<h1>Thanksliving : vivre en disant merci.</h1>
+<p>Thanksgiving dure un jour. Thanksliving, c'est l'habitude d'y penser un peu chaque jour. Écris ce dont tu es reconnaissant aujourd'hui et ajoute-le au mur.</p>
+<form class="say" id="form">
+<label for="t">Aujourd'hui, je remercie…</label>
+<input id="t" maxlength="90" placeholder="le café de ce matin, ma sœur, le soleil" autocomplete="off" required>
+<button type="submit">Ajouter au mur</button>
+</form>
+</header>
+
+<section aria-labelledby="wh">
+<div class="wall-head"><h2 id="wh">Le mur des mercis</h2><span class="count" id="count" aria-live="polite"></span></div>
+<div class="wall" id="wall"></div>
+</section>
+
+<section class="ways">
+<h2>Trois façons de le vivre</h2>
+<div><h3>Chaque soir</h3><p>Note trois choses positives de ta journée, même petites.</p></div>
+<div><h3>Chaque semaine</h3><p>Envoie un vrai message de remerciement à quelqu'un qui a compté.</p></div>
+<div><h3>À chaque repas</h3><p>Prends dix secondes avant de manger pour penser à ce qui est sur la table.</p></div>
+</section>
+</main>
+<footer><main>Thanksliving · un site pour se rappeler de dire merci.</main></footer>
+
+<script>
+(function(){
+var wall=document.getElementById('wall'),count=document.getElementById('count'),form=document.getElementById('form'),input=document.getElementById('t');
+var items=["ma famille","un bon repas partagé","les amis qui écoutent","le calme du matin","une journée sans stress","mon lit chaud"];
+try{var s=localStorage.getItem('thanksliving');if(s){var p=JSON.parse(s);if(Array.isArray(p))items=p;}}catch(e){}
+function save(){try{localStorage.setItem('thanksliving',JSON.stringify(items));}catch(e){}}
+function clean(v){return v.trim().replace(/^(merci\s+(pour\s+)?)/i,'');}
+function btn(label,aria){var b=document.createElement('button');b.type='button';b.textContent=label;if(aria)b.setAttribute('aria-label',aria);return b;}
+function render(newest,editing){
+wall.innerHTML='';
+for(var k=items.length-1;k>=0;k--){(function(k){
+var n=document.createElement('div');n.className='note'+(newest&&k===items.length-1?' new':'');
+if(editing===k){
+var f=document.createElement('form');f.className='edit';
+var inp=document.createElement('input');inp.value=items[k];inp.maxLength=90;inp.setAttribute('aria-label','Modifier ce merci');
+var bar=document.createElement('div');bar.className='actions';
+var ok=btn('Enregistrer');ok.type='submit';var no=btn('Annuler');
+bar.appendChild(ok);bar.appendChild(no);f.appendChild(inp);f.appendChild(bar);n.appendChild(f);
+f.addEventListener('submit',function(e){e.preventDefault();var v=clean(inp.value);if(v){items[k]=v;save();}render();});
+no.addEventListener('click',function(){render();});
+wall.appendChild(n);inp.focus();
+}else{
+var t=document.createElement('p');t.textContent='Merci pour '+items[k]+'.';
+var bar2=document.createElement('div');bar2.className='actions';
+var ed=btn('Modifier','Modifier : '+items[k]);var del=btn('Supprimer','Supprimer : '+items[k]);
+ed.addEventListener('click',function(){render(false,k);});
+del.addEventListener('click',function(){items.splice(k,1);save();render();});
+bar2.appendChild(ed);bar2.appendChild(del);n.appendChild(t);n.appendChild(bar2);wall.appendChild(n);
+}
+})(k);}
+count.textContent=items.length+(items.length>1?' mercis':' merci');}
+form.addEventListener('submit',function(e){
+e.preventDefault();var v=clean(input.value);if(!v)return;
+items.push(v);save();input.value='';render(true);});
+render(false);
+})();
+</script>
+</body>
+</html>
